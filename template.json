@@ -60,7 +60,7 @@
     "ECS1": {
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
-        "InstanceType": "ecs.t5-c1m1.small",
+        "InstanceType": "ecs.c8i.large",
         "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
         "InstanceName": "ECS-1",
         "SecurityGroupId": {
@@ -78,7 +78,7 @@
     "ECS2": {
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
-        "InstanceType": "ecs.t5-c1m1.small",
+        "InstanceType": "ecs.c8i.large",
         "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
         "InstanceName": "ECS-2",
         "SecurityGroupId": {
