@@ -61,7 +61,7 @@
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
         "InstanceType": "ecs.c8i.large",
-        "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
+        "ImageId": "ubuntu_16_04_x64_20G_alibase_20221227.vhd",
         "InstanceName": "ECS-1",
         "SecurityGroupId": {
           "Ref": "SecurityGroup"
@@ -72,14 +72,20 @@
         "InternetMaxBandwidthOut": 1,
         "Password": {
           "Ref": "InstancePassword"
-        }
+        },
+        "SystemDiskCategory": "cloud_ssd",
+        "IoOptimized": "optimized",
+        "InstanceChargeType": "PayAsYouGo",
+        "InstanceChargeType": "PayAsYouGo",
+        "SystemDiskCategory": "cloud_ssd",
+        "IoOptimized": "optimized"
       }
     },
     "ECS2": {
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
         "InstanceType": "ecs.c8i.large",
-        "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
+        "ImageId": "ubuntu_16_04_x64_20G_alibase_20221227.vhd",
         "InstanceName": "ECS-2",
         "SecurityGroupId": {
           "Ref": "SecurityGroup"
@@ -129,7 +135,7 @@
       "Value": {
         "Fn::GetAtt": [
           "LoadBalancer",
-          "IpAddress"
+          "Address"
         ]
       }
     },
