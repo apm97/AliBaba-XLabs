@@ -19,17 +19,11 @@
     "VSwitch": {
       "Type": "ALIYUN::ECS::VSwitch",
       "Properties": {
-        "VpcId": {
-          "Ref": "Vpc"
-        },
+        "VpcId": { "Ref": "Vpc" },
         "ZoneId": {
           "Fn::Select": [
             0,
-            {
-              "Fn::GetAZs": {
-                "Ref": "ALIYUN::Region"
-              }
-            }
+            { "Fn::GetAZs": { "Ref": "ALIYUN::Region" } }
           ]
         },
         "CidrBlock": "10.0.1.0/24"
@@ -38,59 +32,42 @@
     "SecurityGroup": {
       "Type": "ALIYUN::ECS::SecurityGroup",
       "Properties": {
-        "VpcId": {
-          "Ref": "Vpc"
-        },
+        "VpcId": { "Ref": "Vpc" },
         "SecurityGroupIngress": [
-          {
-            "PortRange": "80/80",
-            "Priority": 1,
-            "IpProtocol": "tcp",
-            "SourceCidrIp": "0.0.0.0/0"
-          },
-          {
-            "PortRange": "22/22",
-            "Priority": 1,
-            "IpProtocol": "tcp",
-            "SourceCidrIp": "0.0.0.0/0"
-          }
+          { "PortRange": "80/80", "Priority": 1, "IpProtocol": "tcp", "SourceCidrIp": "0.0.0.0/0" },
+          { "PortRange": "22/22", "Priority": 1, "IpProtocol": "tcp", "SourceCidrIp": "0.0.0.0/0" }
         ]
+      }
+    },
+    "LatestUbuntuImage": {
+      "Type": "ALIYUN::ECS::Image",
+      "Properties": {
+        "ImageName": "ubuntu_22_04_x64_20G_alibase_*",
+        "MostRecent": true
       }
     },
     "ECS1": {
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
-        "InstanceType": "ecs.c8y.small",
-        "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
+        "InstanceType": "ecs.t5-c1m1.small",
+        "ImageId": { "Ref": "LatestUbuntuImage" },
         "InstanceName": "ECS-1",
-        "SecurityGroupId": {
-          "Ref": "SecurityGroup"
-        },
-        "VSwitchId": {
-          "Ref": "VSwitch"
-        },
+        "SecurityGroupId": { "Ref": "SecurityGroup" },
+        "VSwitchId": { "Ref": "VSwitch" },
         "InternetMaxBandwidthOut": 1,
-        "Password": {
-          "Ref": "InstancePassword"
-        }
+        "Password": { "Ref": "InstancePassword" }
       }
     },
     "ECS2": {
       "Type": "ALIYUN::ECS::Instance",
       "Properties": {
-        "InstanceType": "ecs.c8y.small",
-        "ImageId": "ubuntu_22_04_x64_20G_alibase_20250625.vhd",
+        "InstanceType": "ecs.t5-c1m1.small",
+        "ImageId": { "Ref": "LatestUbuntuImage" },
         "InstanceName": "ECS-2",
-        "SecurityGroupId": {
-          "Ref": "SecurityGroup"
-        },
-        "VSwitchId": {
-          "Ref": "VSwitch"
-        },
+        "SecurityGroupId": { "Ref": "SecurityGroup" },
+        "VSwitchId": { "Ref": "VSwitch" },
         "InternetMaxBandwidthOut": 1,
-        "Password": {
-          "Ref": "InstancePassword"
-        }
+        "Password": { "Ref": "InstancePassword" }
       }
     },
     "LoadBalancer": {
@@ -99,39 +76,22 @@
         "LoadBalancerName": "LabCLB",
         "LoadBalancerSpec": "slb.s1.small",
         "AddressType": "internet",
-        "VSwitchId": {
-          "Ref": "VSwitch"
-        }
+        "VSwitchId": { "Ref": "VSwitch" }
       }
     }
   },
   "Outputs": {
     "ECS1_PublicIP": {
       "Description": "Public IP of the first ECS instance.",
-      "Value": {
-        "Fn::GetAtt": [
-          "ECS1",
-          "PublicIp"
-        ]
-      }
+      "Value": { "Fn::GetAtt": [ "ECS1", "PublicIp" ] }
     },
     "ECS2_PublicIP": {
       "Description": "Public IP of the second ECS instance.",
-      "Value": {
-        "Fn::GetAtt": [
-          "ECS2",
-          "PublicIp"
-        ]
-      }
+      "Value": { "Fn::GetAtt": [ "ECS2", "PublicIp" ] }
     },
     "LoadBalancer_IP": {
       "Description": "Public IP of the Classic Load Balancer.",
-      "Value": {
-        "Fn::GetAtt": [
-          "LoadBalancer",
-          "IpAddress"
-        ]
-      }
+      "Value": { "Fn::GetAtt": [ "LoadBalancer", "IpAddress" ] }
     },
     "ECS_Instance_IDs": {
       "Description": "IDs of the created ECS instances.",
@@ -139,18 +99,8 @@
         "Fn::Join": [
           ", ",
           [
-            {
-              "Fn::GetAtt": [
-                "ECS1",
-                "InstanceId"
-              ]
-            },
-            {
-              "Fn::GetAtt": [
-                "ECS2",
-                "InstanceId"
-              ]
-            }
+            { "Fn::GetAtt": [ "ECS1", "InstanceId" ] },
+            { "Fn::GetAtt": [ "ECS2", "InstanceId" ] }
           ]
         ]
       }
